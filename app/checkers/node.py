@@ -37,24 +37,13 @@ class Node():
         self.children = []                      # Possible Board States 3 Deep
         self.score = self.get_score()           # Fitness Score of Current Board State
 
-    def fill_tree(self, depth):
-        """
-        Fill out Tree from this node
-        """
-        if depth < 1:
-            return
-        moves = self.get_all_valid_moves()
-        self.children = [self.execute_move(move) for move in moves]
-        for node in self.children:
-            node.fill_tree(depth-1)
-
     def get_all_valid_moves(self):
         """
         Return list of valid moves in format [src, dst]
         """
         moves = []
         pieces = [3,4] if self.player else [1,2]
-        if self.can_jump:
+        if self.find_jump():
             # Look Only For Jumps
             for x in range(8):
                 for y in range(8):
@@ -170,6 +159,8 @@ class Node():
             if dst[0] == 0 and new_node.board[dst[0]][dst[1]] % 2 == 1:
                 new_node.board[dst[0]][dst[1]] += 1
         new_node.player = not new_node.player
+        # new_node.can_jump = new_node.find_jump()
+        print("Finish execute move")
         return new_node
 
     def get_score(self):
@@ -179,10 +170,11 @@ class Node():
         if self.get_game_over():
             return float('-inf') if self.player else float('inf')
         score = 0
-        score += self.get_draught_score()*3
-        score += self.get_king_score()*4
+        score += self.get_draught_score()*6
+        score += self.get_king_score()*8
         score += self.get_safe_draught_score()*1
         score += self.get_safe_king_score()*1
+        # score += self
         return score
     
     def get_game_over(self):
