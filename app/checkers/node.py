@@ -183,7 +183,7 @@ class Node():
         if len(self.get_all_valid_moves()) == 0:
             return True
         return False
-    
+
     def get_draught_score(self):
         """
         Return the difference in draughts
@@ -213,7 +213,7 @@ class Node():
                 if square == enemy_kings:
                     king_score -= 1
         return king_score
-    
+
     def get_safe_draught_score(self):
         """
         Return the difference in "safe" draughts

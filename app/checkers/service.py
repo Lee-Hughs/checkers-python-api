@@ -16,12 +16,12 @@ def get_best_move(board: List[List[int]]):
     if len(moves_list) == 0:
         for row in board:
             print(row)
-        return
+        return "Oops"
     if len(moves_list) == 1:
         return moves_list[0]
-    # moves_map = {index: root.execute_move(move).get_score() for index, move in enumerate(moves_list)}
     moves_map = {
-        index: mini_max(root.execute_move(move), 2, float('-inf'), float('inf')) for index, move in enumerate(moves_list)
+        index: mini_max(root.execute_move(move), 3, float('-inf'), float('inf'))
+            for index, move in enumerate(moves_list)
     }
     print(moves_list)
     print(moves_map)
@@ -45,12 +45,11 @@ def mini_max(root: Node, depth: int, alpha: int, beta: int):
             if beta <= alpha:
                 break
         return maxScore
-    else:
-        minScore = float('inf')
-        for child in root.children:
-            score = mini_max(child, depth-1, alpha, beta)
-            minScore = min(minScore, score)
-            beta = min(beta, score)
-            if beta <= alpha:
-                break
-        return minScore
+    minScore = float('inf')
+    for child in root.children:
+        score = mini_max(child, depth-1, alpha, beta)
+        minScore = min(minScore, score)
+        beta = min(beta, score)
+        if beta <= alpha:
+            break
+    return minScore

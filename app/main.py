@@ -1,11 +1,8 @@
 """
 FastAPI Checkers AI
 """
-import sys
-
 from fastapi import FastAPI
 from app.models.checkers_models import CheckersRequest
-from app.checkers.node import Node
 from app.checkers import service
 
 app = FastAPI()
@@ -22,8 +19,4 @@ async def checkers(request: CheckersRequest):
     """
     Get Checkers Move
     """
-    # root = Node(board=request.board, player=False)
-    # root.can_jump = root.find_jump()
-    # moves = root.get_all_valid_moves()
-    # print("Moves: ", moves)
     return {"moves": service.get_best_move(request.board)}
