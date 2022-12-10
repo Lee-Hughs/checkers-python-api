@@ -35,7 +35,6 @@ class Node():
         self.move = move                        # Last Move Made
         self.parent = parent                    # Previous Board State
         self.children = []                      # Possible Board States 3 Deep
-        self.score = self.get_score()           # Fitness Score of Current Board State
 
     def get_all_valid_moves(self):
         """
@@ -152,15 +151,15 @@ class Node():
             dst = move[index+1]
             new_node.board[dst[0]][dst[1]] = new_node.board[src[0]][src[1]]
             new_node.board[src[0]][src[1]] = 0
-            # If Jumping
+            # If Jumping TODO: double check that this works for all scenarios
             if abs(src[0]-dst[0]) > 1:
-                new_node.board[(src[0]+dst[0])//2][(src[0]+dst[0])//2] = 0
+                new_node.board[(src[0]+dst[0])//2][(src[1]+dst[1])//2] = 0
             # If Promoting
-            if dst[0] == 0 and new_node.board[dst[0]][dst[1]] % 2 == 1:
+            if dst[0] == 0 and new_node.board[dst[0]][dst[1]] % 2 == 1 and new_node.player:
+                new_node.board[dst[0]][dst[1]] += 1
+            if dst[0] == 7 and new_node.board[dst[0]][dst[1]] % 2 == 1 and not new_node.player:
                 new_node.board[dst[0]][dst[1]] += 1
         new_node.player = not new_node.player
-        # new_node.can_jump = new_node.find_jump()
-        print("Finish execute move")
         return new_node
 
     def get_score(self):

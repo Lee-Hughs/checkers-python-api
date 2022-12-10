@@ -8,12 +8,6 @@ from app.models.checkers_models import CheckersRequest
 from app.checkers.node import Node
 from app.checkers import service
 
-import sys
-
-print(sys.getrecursionlimit())
-# sys.setrecursionlimit(1000)
-sys.tracebacklimit = 0
-
 app = FastAPI()
 
 @app.get("/")
