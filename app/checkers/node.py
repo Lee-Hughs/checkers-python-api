@@ -171,8 +171,8 @@ class Node():
         score = 0
         score += self.get_draught_score()*6
         score += self.get_king_score()*8
-        score += self.get_safe_draught_score()*1
-        score += self.get_safe_king_score()*1
+        # score += self.get_safe_draught_score()*1
+        # score += self.get_safe_king_score()*1
         # score += self
         return score
     
